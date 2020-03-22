@@ -1,0 +1,20 @@
+<launch>
+  <arg name="position" default="false" />
+  <arg name="torque" default="false" />
+
+  <group if="$(arg position)">
+    <!-- Include ros_control launch file to load joint torque controllers -->
+    <include file="$(find rrbot_control)/launch/rrbot_control.launch" />
+
+    <!-- Create node to control joint torques using effort controller. This is exactly the same as running "rosrun" -->
+    <node name="rrbot_control_example_publisher" pkg="rrbot_control_example" type="rrbot_control_example_publisher" output="screen" respawn="true" args="p" />
+  </group>
+
+  <group if="$(arg torque)">
+    <!-- Include ros_control launch file to load joint torque controllers -->
+    <include file="$(find rrbot_control)/launch/rrbot_control_effort.launch" />
+
+    <!-- Create node to control joint torques using effort controller. This is exactly the same as running "rosrun" -->
+    <node name="rrbot_control_example_publisher" pkg="rrbot_control_example" type="rrbot_control_example_publisher" output="screen" respawn="true" args="t" />
+  </group>
+</launch>
